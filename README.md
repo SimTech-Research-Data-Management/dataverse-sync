@@ -1,5 +1,7 @@
 # Dataverse Repository Sync
 
+ ![Tests](https://github.com/JR-1991/dataverse-sync/actions/workflows/test_publish.yml/badge.svg)
+
 Are you looking for an easy way to work with Dataverse? If so, you might find this GitHub workflow helpful. It's basically a mini-git system that syncs your repository with your Dataverse dataset. Here's what it does:
 
 - Pushes all your repository files to your dataset
