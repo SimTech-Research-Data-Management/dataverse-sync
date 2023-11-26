@@ -1,0 +1,41 @@
+# BEGIN: 8zv7t5r2n6p1
+name: dataverse-repo-sync
+description: |
+  "This action syncs a directory to a dataset in Dataverse."
+inputs:
+  dataverse_url:
+    description: "The URL of the Dataverse instance."
+    required: true
+  persistent_id:
+    description: "The persistent ID of the dataset."
+    required: true
+  api_token:
+    description: "The API Token used for authentication"
+    required: true
+  directory:
+    description: "The directory to which the respsitory needs to be synced"
+    required: true
+    default: ""
+runs:
+  using: "composite"
+  steps:
+    - name: "Checkout"
+      uses: "actions/checkout@v2"
+    - name: "Install Python"
+      uses: "actions/setup-python@v2"
+      with:
+        python-version: "3.11"
+    - name: "Upload data"
+      shell: "bash"
+      run: |
+        python3 -m pip install -r ${{ github.action_path }}/requirements
+        python3 -m pip install git+https://github.com/gdcc/python-dvuploader.git@feature/non-direct-upload
+
+        python3 ${{ github.action_path }}/repo_uploader.py \
+          --dataverse-url "${{ inputs.dataverse_url }}"
+          --persistent-id "${{ inputs.persistent_id }}"
+          --api-token "${{ inputs.api_token }}"
+          --directory "${{ inputs.directory }}"
+
+
+      
