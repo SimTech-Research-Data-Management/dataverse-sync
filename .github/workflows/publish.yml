@@ -2,7 +2,13 @@
 
 name: Dataverse Sync
 
-on: [push, release]
+on:
+    push:
+        branches:
+        - main
+    release:
+        types:
+        - published
 
 jobs:
   dv-sync:
