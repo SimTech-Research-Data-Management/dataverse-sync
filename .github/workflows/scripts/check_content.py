@@ -44,3 +44,5 @@ if __name__ == "__main__":
         r_hash = repo_files[ds_name]
 
         assert ds_hash == r_hash, f"Hash mismatch: {ds_hash} != {r_hash}"
+
+    print("🎉 Tests were successful!")
