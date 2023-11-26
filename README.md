@@ -54,6 +54,7 @@ Hope that helps!
 ```yaml
 name: Dataverse Sync
 
+# Choose whatever suits your needs
 on: [push, release]
 
 jobs:
