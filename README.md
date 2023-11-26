@@ -21,7 +21,7 @@ Hope that helps!
 ```yaml
 # Push to the root of the dataset
 - name: Synchronize to DV
-  uses: JR-1991/dataverse-sync@main
+  uses: JR-1991/dataverse-sync@v1
   with:
     dataverse_url: "https://demo.dataverse.org"
     api_token: ${ secrets.MY_API_TOKEN }
@@ -29,7 +29,7 @@ Hope that helps!
 
 # Push to a specific sub directory
 - name: Synchronize to DV
-  uses: JR-1991/dataverse-sync@main
+  uses: JR-1991/dataverse-sync@v1
   with:
     dataverse_url: "https://demo.dataverse.org"
     api_token: ${ secrets.MY_API_TOKEN }
@@ -64,7 +64,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Synchronize to DV
-      uses: JR-1991/dataverse-sync@main
+      uses: JR-1991/dataverse-sync@v1
       with:
         dataverse_url: "Enter your Dataverse URL here"
         api_token: ${{ secrets.DV_API_TOKEN }}
