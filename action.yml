@@ -32,9 +32,9 @@ runs:
         python3 -m pip install git+https://github.com/gdcc/python-dvuploader.git@feature/non-direct-upload
 
         python3 ${{ github.action_path }}/repo_uploader.py \
-          --dataverse-url "${{ inputs.dataverse_url }}"
-          --persistent-id "${{ inputs.persistent_id }}"
-          --api-token "${{ inputs.api_token }}"
+          --dataverse-url "${{ inputs.dataverse_url }}" \
+          --persistent-id "${{ inputs.persistent_id }}" \
+          --api-token "${{ inputs.api_token }}" \
           --directory "${{ inputs.directory }}"
 
 
