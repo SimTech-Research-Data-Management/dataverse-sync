@@ -28,7 +28,6 @@ runs:
     - name: "Upload data"
       shell: "bash"
       run: |
-        python3 -m pip install -r ${{ github.action_path }}/requirements.txt
         python3 -m pip install git+https://github.com/gdcc/python-dvuploader.git@feature/non-direct-upload
 
         python3 ${{ github.action_path }}/repo_uploader.py \
