@@ -1,11 +1,10 @@
 import argparse
+import fnmatch
 import os
 from pathlib import Path
 
-import git
 from dvuploader import DVUploader, File
 import requests
-from rich import print
 
 DATASET_ENDPOINT = "{URL}/api/datasets/:persistentId/?persistentId={PID}"
 USAGE = """
@@ -172,6 +171,28 @@ def _remove_unused_files(dataset_files: list[str], repo_files: list[str]) -> Non
                 print(f"├── File '{file_path}' deleted.")
 
 
+def _filter_paths(paths: list[str]) -> list[str]:
+    """
+    Filter out the .git directory and the .dvregistry file.
+
+    Args:
+        paths (list[str]): A list of file paths.
+
+    Returns:
+        List[str]: A list of file paths.
+    """
+
+    gitignore = Path(".gitignore").read_text().splitlines()
+    gitignore = [line for line in gitignore if not line.startswith("#")]
+
+    to_keep = []
+    for file in Path(".").rglob("*"):
+        if not any(fnmatch.fnmatch(str(file), pattern) for pattern in gitignore):
+            to_keep.append(file)
+
+    return to_keep
+
+
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser(usage=USAGE)
     argparser.add_argument(
@@ -208,6 +229,11 @@ if __name__ == "__main__":
 
     # Write the .dvregistry file
     repo_files = _get_repo_paths()
+
+    if os.path.exists(".gitignore"):
+        # Filter out the files that are ignored
+        repo_files = _filter_paths(repo_files)
+
     _write_dvregistry(repo_files)
 
     # Get registry of files in the dataset
