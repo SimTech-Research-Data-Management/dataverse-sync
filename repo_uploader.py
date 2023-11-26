@@ -77,9 +77,10 @@ def _get_repo_paths() -> list[str]:
 
     if os.path.exists(".gitignore"):
         # Filter out the files
-        repo = git.Repo(".", search_parent_directories=True)
-        ignored = repo.ignored(filenames)  # type: ignore
-        repo.close()
+        # repo = git.Repo(".", search_parent_directories=True)
+        # ignored = repo.ignored(filenames)  # type: ignore
+        # repo.close()
+        ignored = []
     else:
         ignored = []
 
