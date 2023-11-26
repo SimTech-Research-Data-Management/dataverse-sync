@@ -11,6 +11,11 @@ Hope that helps!
 
 ## Usage
 
+> [!CAUTION]
+> It is highly recommended to store your `API_TOKEN` as a secret in your repository to prevent unauthorized users from accessing your datasets.
+>
+> Not sure what secrets are? Find information how to [add](https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/managing-secrets-for-your-repository-and-organization-for-github-codespaces) and [use](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) secrets within actions.
+
 ```yaml
 # Push to the root of the dataset
 - name: Synchronize to DV
@@ -29,12 +34,6 @@ Hope that helps!
     persistent_id: "doi:10.5072/FK2/ABC123"
     directory: "some/sub/dir"
 ```
-
-> [!CAUTION]
-> It is highly recommended to store your `API_TOKEN` as a secret in your repository to prevent unauthorized users from accessing your datasets.
-
-> [!TIP]
-> Not sure what secrets are? Find information how to [add](https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/managing-secrets-for-your-repository-and-organization-for-github-codespaces) and [use](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) secrets within actions.
 
 ## Inputs
 
