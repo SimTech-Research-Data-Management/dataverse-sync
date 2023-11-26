@@ -51,9 +51,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Synchronize to DV
-        uses: JR-1991/dataverse-sync@main
-        with:
-          dataverse_url: "Enter your Dataverse URL here"
-          api_token: ${ secrets.DV_API_TOKEN }
-          persistent_id: "Enter your dataset persistent ID here"
+      uses: JR-1991/dataverse-sync@main
+      with:
+        dataverse_url: "Enter your Dataverse URL here"
+        api_token: ${ secrets.DV_API_TOKEN }
+        persistent_id: "Enter your dataset persistent ID here"
 ```
