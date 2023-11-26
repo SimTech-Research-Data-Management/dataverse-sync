@@ -14,7 +14,7 @@ Hope that helps!
 ```yaml
 # Push to the root of the dataset
 - name: Synchronize to DV
-  uses: JR-1991/dv-sync@main
+  uses: JR-1991/dataverse-sync@main
   with:
     dataverse_url: "https://demo.dataverse.org"
     api_token: ${ secrets.MY_API_TOKEN }
@@ -22,7 +22,7 @@ Hope that helps!
 
 # Push to a specific sub directory
 - name: Synchronize to DV
-  uses: JR-1991/dv-sync@main
+  uses: JR-1991/dataverse-sync@main
   with:
     dataverse_url: "https://demo.dataverse.org"
     api_token: ${ secrets.MY_API_TOKEN }
@@ -37,3 +37,23 @@ Hope that helps!
 > Not sure what secrets are? Find information how to [add](https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/managing-secrets-for-your-repository-and-organization-for-github-codespaces) and [use](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) secrets within actions.
 
 ## Inputs
+
+## Complete workflow example
+
+```yaml
+name: Dataverse Sync
+
+on: [push, release]
+
+jobs:
+  dv-sync:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Synchronize to DV
+        uses: JR-1991/dataverse-sync@main
+        with:
+          dataverse_url: "Enter your Dataverse URL here"
+          api_token: ${ secrets.MY_API_TOKEN }
+          persistent_id: "Enter your dataset persistent ID here"
+```
