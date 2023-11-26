@@ -72,18 +72,7 @@ def _get_repo_paths() -> list[str]:
     Returns:
         List[str]: A list of file paths.
     """
-    filenames = [str(f) for f in Path(".").rglob("*") if f.is_file()]
-
-    if os.path.exists(".gitignore"):
-        # Filter out the files
-        # repo = git.Repo(".", search_parent_directories=True)
-        # ignored = repo.ignored(filenames)  # type: ignore
-        # repo.close()
-        ignored = []
-    else:
-        ignored = []
-
-    return [f for f in filenames if not f in ignored and not f.startswith(".")]
+    return [str(f) for f in Path(".").rglob("*") if not str(f).startswith(".")]
 
 
 def _write_dvregistry(file_paths: list[str]) -> None:
@@ -186,9 +175,9 @@ def _filter_paths(paths: list[str]) -> list[str]:
     gitignore = [line for line in gitignore if not line.startswith("#")]
 
     to_keep = []
-    for file in Path(".").rglob("*"):
-        if not any(fnmatch.fnmatch(str(file), pattern) for pattern in gitignore):
-            to_keep.append(file)
+    for path in paths:
+        if not any(fnmatch.fnmatch(path, pattern) for pattern in gitignore):
+            to_keep.append(path)
 
     return to_keep
 
