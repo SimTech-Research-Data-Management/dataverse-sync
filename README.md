@@ -38,6 +38,17 @@ Hope that helps!
 
 ## Inputs
 
+<!-- AUTO-DOC-INPUT:START - Do not remove or modify this section -->
+
+|                                  INPUT                                  |  TYPE  | REQUIRED | DEFAULT |                          DESCRIPTION                          |
+|-------------------------------------------------------------------------|--------|----------|---------|---------------------------------------------------------------|
+|       <a name="input_api_token"></a>[api_token](#input_api_token)       | string |   true   |         |          The API Token used for <br>authentication            |
+| <a name="input_dataverse_url"></a>[dataverse_url](#input_dataverse_url) | string |   true   |         |            The URL of the Dataverse <br>instance.             |
+|       <a name="input_directory"></a>[directory](#input_directory)       | string |   true   |         | The directory to which the <br>respsitory needs to be synced  |
+| <a name="input_persistent_id"></a>[persistent_id](#input_persistent_id) | string |   true   |         |            The persistent ID of the <br>dataset.              |
+
+<!-- AUTO-DOC-INPUT:END -->
+
 ## Complete workflow example
 
 ```yaml
