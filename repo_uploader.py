@@ -1,8 +1,8 @@
 import argparse
 import fnmatch
 import os
-from pathlib import Path
 import uuid
+from pathlib import Path
 
 from dvuploader import DVUploader, File
 import requests
@@ -51,6 +51,25 @@ def _validate_api_token(api_token: str) -> str:
         return str(uuid.UUID(api_token, version=4))
     except Exception as e:
         raise ValueError("Invalid API token.") from e
+
+
+def _validate_persistent_id(persistent_id: str) -> str:
+    """
+    Validate the persistent identifier (DOI).
+
+    Args:
+        persistent_id (str): The persistent identifier (DOI).
+
+    Returns:
+        None
+    """
+
+    if not persistent_id.startswith("doi:"):
+        raise ValueError(
+            "Invalid persistent identifier (DOI). Please follow the format: doi:10.5072/ABC123"
+        )
+
+    return persistent_id
 
 
 def _get_dv_version(dv_url: str) -> str:
@@ -231,7 +250,7 @@ if __name__ == "__main__":
     args = argparser.parse_args()
 
     DV_URL = args.dataverse_url
-    PID = args.persistent_id
+    PID = _validate_persistent_id(args.persistent_id)
     API_TOKEN = _validate_api_token(args.api_token)
     SUBDIR = args.directory
 
