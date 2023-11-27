@@ -22,7 +22,7 @@ Hope that helps!
   uses: JR-1991/dataverse-sync@v1
   with:
     dataverse_url: "https://demo.dataverse.org"
-    api_token: ${ secrets.MY_API_TOKEN }
+    api_token: ${{ secrets.MY_API_TOKEN }}
     persistent_id: "doi:10.5072/FK2/ABC123"
 
 # Push to a specific sub directory
@@ -30,7 +30,7 @@ Hope that helps!
   uses: JR-1991/dataverse-sync@v1
   with:
     dataverse_url: "https://demo.dataverse.org"
-    api_token: ${ secrets.MY_API_TOKEN }
+    api_token: ${{ secrets.MY_API_TOKEN }}
     persistent_id: "doi:10.5072/FK2/ABC123"
     directory: "some/sub/dir"
 ```
