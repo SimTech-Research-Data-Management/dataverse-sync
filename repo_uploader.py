@@ -72,7 +72,11 @@ def _get_repo_paths() -> list[str]:
     Returns:
         List[str]: A list of file paths.
     """
-    return [str(f) for f in Path(".").rglob("*") if not str(f).startswith(".")]
+    return [
+        str(f)
+        for f in Path(".").rglob("*")
+        if not str(f).startswith(".") and f.is_file()
+    ]
 
 
 def _write_dvregistry(file_paths: list[str]) -> None:
