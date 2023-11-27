@@ -1,6 +1,6 @@
 # Dataverse Repository Sync
 
- ![Tests](https://github.com/JR-1991/dataverse-sync/actions/workflows/test_publish.yml/badge.svg)
+ ![Tests](https://github.com/JR-1991/dataverse-sync/actions/workflows/test_publish.yml/badge.svg) [![](<https://img.shields.io/badge/Dataverse DOI-doi:10.18419/darus--3801-blue>)](https://darus.uni-stuttgart.de/dataset.xhtml?persistentId=doi:10.18419/darus-3801)
 
 Are you looking for an easy way to work with Dataverse? If so, you might find this GitHub workflow helpful. It's basically a mini-git system that syncs your repository with your Dataverse dataset. Here's what it does:
 
