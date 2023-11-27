@@ -2,6 +2,7 @@ import argparse
 import fnmatch
 import os
 from pathlib import Path
+import uuid
 
 from dvuploader import DVUploader, File
 import requests
@@ -33,6 +34,23 @@ python repo_uploader.py \\
     --api-token <API_TOKEN> 
 
 """
+
+
+def _validate_api_token(api_token: str) -> str:
+    """
+    Validate the API token. Should be UUIDv4.
+
+    Args:
+        api_token (str): The API token.
+
+    Returns:
+        None
+    """
+    try:
+        api_token = api_token.strip(r"\s\\n")
+        return str(uuid.UUID(api_token, version=4))
+    except Exception as e:
+        raise ValueError("Invalid API token.") from e
 
 
 def _get_dv_version(dv_url: str) -> str:
@@ -214,7 +232,7 @@ if __name__ == "__main__":
 
     DV_URL = args.dataverse_url
     PID = args.persistent_id
-    API_TOKEN = args.api_token
+    API_TOKEN = _validate_api_token(args.api_token)
     SUBDIR = args.directory
 
     # Get the Dataverse version
