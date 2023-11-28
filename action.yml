@@ -1,5 +1,8 @@
 # BEGIN: 8zv7t5r2n6p1
 name: dataverse-repo-sync
+branding:
+  icon: arrow-up-circle
+  color: blue
 description: |
   "This action syncs a directory to a dataset in Dataverse."
 inputs:
