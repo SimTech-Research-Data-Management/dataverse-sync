@@ -1,0 +1,58 @@
+# doi:10.18419/darus-3801
+
+name: Test action
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  dv-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v4'
+
+      - name: Run Dataverse Action
+        id: dataverse
+        uses: gdcc/dataverse-action@main
+
+      - name: 'Install Python'
+        uses: 'actions/setup-python@v2'
+        with:
+          python-version: '3.11'
+
+      - name: 'Install requests'
+        run: |
+          python3 -m pip install requests
+
+      - name: 'Create Dataset'
+        run: |
+          export API_TOKEN=${{ steps.dataverse.outputs.api_token }}
+          export PARENT=root
+          export SERVER_URL=${{ steps.dataverse.outputs.base_url }}
+
+          # Remove the trailing slash from the server URL
+          SERVER_URL=${SERVER_URL%/}
+
+          DATASET_RESPONSE=$(curl -s -H "X-Dataverse-key:$API_TOKEN" -X POST "$SERVER_URL/api/dataverses/$PARENT/datasets" --upload-file .github/workflows/data/initial_dataset.json -H 'Content-type:application/json')
+
+          # Print the response
+          echo $DATASET_RESPONSE
+
+          echo "DATASET_PID=$(echo $DATASET_RESPONSE | jq -r '.data.persistentId')" >> $GITHUB_ENV
+
+      - name: Synchronize to DV
+        uses: ./
+        with:
+          dataverse_url: ${{ steps.dataverse.outputs.base_url }}
+          api_token: ${{ steps.dataverse.outputs.api_token }}
+          persistent_id: ${{ env.DATASET_PID }}
+
+      - name: Test content
+        env:
+          DV_API_TOKEN: ${{ steps.dataverse.outputs.api_token }}
+          DV_URL: ${{ steps.dataverse.outputs.base_url }}
+          DV_PID: ${{ env.DATASET_PID }}
+        run: |
+          python3 .github/workflows/scripts/check_content.py
