@@ -32,6 +32,9 @@ jobs:
           export PARENT=root
           export SERVER_URL=${{ steps.dataverse.outputs.base_url }}
 
+          # Remove the trailing slash from the server URL
+          SERVER_URL=${SERVER_URL%/}
+
           DATASET_RESPONSE=$(curl -s -H "X-Dataverse-key:$API_TOKEN" -X POST "$SERVER_URL/api/dataverses/$PARENT/datasets" --upload-file .github/workflows/data/initial_dataset.json -H 'Content-type:application/json')
 
           # Print the response
