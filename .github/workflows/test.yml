@@ -34,6 +34,9 @@ jobs:
 
           DATASET_RESPONSE=$(curl -s -H "X-Dataverse-key:$API_TOKEN" -X POST "$SERVER_URL/api/dataverses/$PARENT/datasets" --upload-file .github/workflows/data/initial_dataset.json -H 'Content-type:application/json')
 
+          # Print the response
+          echo $DATASET_RESPONSE
+
           echo "DATASET_PID=$(echo $DATASET_RESPONSE | jq -r '.data.persistentId')" >> $GITHUB_ENV
 
       - name: Synchronize to DV
