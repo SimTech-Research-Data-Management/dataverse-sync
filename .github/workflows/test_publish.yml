@@ -3,32 +3,54 @@
 name: Test and publish
 
 on:
-    push:
-        branches:
-        - main
-    release:
-        types:
-        - published
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - published
 
 jobs:
   dv-sync:
     runs-on: ubuntu-latest
     env:
       DV_API_TOKEN: ${{ secrets.DV_API_TOKEN }}
-      DV_URL: "https://darus.uni-stuttgart.de"
-      DV_PID: "doi:10.18419/darus-3801"
+      DV_URL: 'https://darus.uni-stuttgart.de'
+      DV_PID: 'doi:10.18419/darus-3801'
     steps:
-    - uses: actions/checkout@v2
-    - name: Synchronize to DV
-      uses: ./
-      with:
-        dataverse_url: ${{ env.DV_URL }}
-        api_token: ${{ env.DV_API_TOKEN }}
-        persistent_id: ${{ env.DV_PID }}
-    - name: "Install Python"
-      uses: "actions/setup-python@v2"
-      with:
-        python-version: "3.11"
-    - name: Test content
-      run: |
-        python3 .github/workflows/scripts/check_content.py
+      - name: 'Checkout'
+        uses: 'actions/checkout@v4'
+
+      - name: Run Dataverse Action
+        id: dataverse
+        uses: gdcc/dataverse-action@main
+
+      - name: 'Install Python'
+        uses: 'actions/setup-python@v2'
+        with:
+          python-version: '3.11'
+
+      - name: 'Create Dataset'
+        run: |
+          export API_TOKEN=${{ steps.dataverse.outputs.api_token }}
+          export PARENT=root
+          export SERVER_URL=${{ steps.dataverse.outputs.base_url }}
+
+          DATASET_RESPONSE=$(curl -s -H "X-Dataverse-key:$API_TOKEN" -X POST "$SERVER_URL/api/dataverses/$PARENT/datasets" --upload-file .github/workflows/data/initial_dataset.json -H 'Content-type:application/json')
+
+          echo "DATASET_PID=$(echo $DATASET_RESPONSE | jq -r '.data.persistentId')" >> $GITHUB_ENV
+
+      - name: Synchronize to DV
+        uses: ./
+        with:
+          dataverse_url: ${{ steps.dataverse.outputs.base_url }}
+          api_token: ${{ steps.dataverse.outputs.api_token }}
+          persistent_id: ${{ env.DATASET_PID }}
+
+      - name: Test content
+        env:
+          DV_API_TOKEN: ${{ steps.dataverse.outputs.api_token }}
+          DV_URL: ${{ steps.dataverse.outputs.base_url }}
+          DV_PID: ${{ env.DATASET_PID }}
+        run: |
+          python3 .github/workflows/scripts/check_content.py

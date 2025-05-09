@@ -34,9 +34,9 @@ if __name__ == "__main__":
         if path.is_file() and not str(path).startswith(".")
     }
 
-    assert len(ds_files) == len(
-        repo_files
-    ), f"Length mismatch: {len(ds_files)} != {len(repo_files)}"
+    assert len(ds_files) == len(repo_files), (
+        f"Length mismatch: {len(ds_files)} != {len(repo_files)}"
+    )
 
     for ds_name, ds_hash in ds_files:
         assert ds_name in repo_files, f"File not found: {ds_name}"
