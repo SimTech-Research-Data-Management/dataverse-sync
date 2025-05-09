@@ -9,10 +9,6 @@ on:
 jobs:
   dv-sync:
     runs-on: ubuntu-latest
-    env:
-      DV_API_TOKEN: ${{ secrets.DV_API_TOKEN }}
-      DV_URL: 'https://darus.uni-stuttgart.de'
-      DV_PID: 'doi:10.18419/darus-3801'
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@v4'
@@ -25,6 +21,10 @@ jobs:
         uses: 'actions/setup-python@v2'
         with:
           python-version: '3.11'
+
+      - name: 'Install requests'
+        run: |
+          python3 -m pip install requests
 
       - name: 'Create Dataset'
         run: |
