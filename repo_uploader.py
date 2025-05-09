@@ -249,8 +249,6 @@ if __name__ == "__main__":
 
     args = argparser.parse_args()
 
-    print(args.persistent_id)
-
     DV_URL = args.dataverse_url
     PID = _validate_persistent_id(args.persistent_id)
     API_TOKEN = _validate_api_token(args.api_token)
