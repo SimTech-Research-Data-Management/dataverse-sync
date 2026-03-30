@@ -31,7 +31,7 @@ runs:
     - name: "Upload data"
       shell: "bash"
       run: |
-        python3 -m pip install dvuploader
+        python3 -m pip install dvuploader requests
 
         python3 ${{ github.action_path }}/repo_uploader.py \
           --dataverse-url "${{ inputs.dataverse_url }}" \
