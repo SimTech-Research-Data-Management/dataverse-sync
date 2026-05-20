@@ -21,7 +21,7 @@ Hope that helps!
 ```yaml
 # Push to the root of the dataset
 - name: Synchronize to DV
-  uses: SimTech-Research-Data-Management/dataverse-sync@v3
+  uses: SimTech-Research-Data-Management/dataverse-sync@v4
   with:
     dataverse_url: "https://demo.dataverse.org"
     api_token: ${{ secrets.MY_API_TOKEN }}
@@ -29,7 +29,7 @@ Hope that helps!
 
 # Push to a specific sub directory
 - name: Synchronize to DV
-  uses: SimTech-Research-Data-Management/dataverse-sync@v3
+  uses: SimTech-Research-Data-Management/dataverse-sync@v4
   with:
     dataverse_url: "https://demo.dataverse.org"
     api_token: ${{ secrets.MY_API_TOKEN }}
